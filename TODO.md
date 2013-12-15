@@ -18,3 +18,4 @@ BUC
 - AI learning of usage patterns to identify possible absences and estimate leaving time
 - Enable chat between users to clarify if a park place is free or not
 - Subscribe to a parking group
+- Mark parking place as Public makes it visible to all the groups

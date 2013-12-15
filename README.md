@@ -1,7 +1,7 @@
 Description
 ===========
 
-ParkingFriends allows a group of person to share private parking places planning absences and registering usage.
+ParkingFriends allows a group of people to share private parking places planning absences and registering usage.
 The Owner of a parking place get paid when a Friend uses his places.
 Owners announcing absence dates in advance are the first in the list when searching for free parking places in a location.
 
