@@ -108,17 +108,17 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>        
+        </profile>
     </profiles>
-    
+
     <properties>
         <!-- Maven build properties -->
-    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.6</java.version>
 
         <!-- Librairies versions -->
-        <spring.version>4.0.0.RC2</spring.version>
-          
+        <spring.version>4.0.0.RELEASE</spring.version>
+
         <spring.security.version>3.1.4.RELEASE</spring.security.version>
         <hibernate.version>4.2.7.Final</hibernate.version>
         <codahale.metrics.version>3.0.1</codahale.metrics.version>
@@ -130,7 +130,7 @@
             <name>Sonatype Releases Repository</name>
             <url>http://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
-        
+
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
@@ -139,7 +139,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-          
+
     </repositories>
     <prerequisites>
         <maven>3.0.0</maven>
@@ -382,7 +382,7 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>1.4.2.RELEASE</version>
-         </dependency>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
@@ -406,10 +406,10 @@
 
         <!-- Test dependencies -->
         <dependency>
-              <groupId>com.jayway.awaitility</groupId>
-              <artifactId>awaitility</artifactId>
-              <version>1.4.0</version>
-              <scope>test</scope>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>1.4.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
@@ -455,7 +455,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>root</finalName>
+        <finalName>parkingfriends</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -471,8 +471,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -488,11 +488,15 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <message>You are running an older version of Maven. JHipster requires at least Maven 3.0</message>
+                                    <message>You are running an older version of Maven. JHipster requires at least Maven
+                                        3.0
+                                    </message>
                                     <version>[3.0.0,)</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <message>You are running an older version of Java. JHipster requires at least JDK 1.7</message>
+                                    <message>You are running an older version of Java. JHipster requires at least JDK
+                                        1.7
+                                    </message>
                                     <version>[1.7.0,)</version>
                                 </requireJavaVersion>
                             </rules>
@@ -519,8 +523,8 @@
             </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
-    			<artifactId>jetty-maven-plugin</artifactId>
-    			<version>9.1.0.v20131115</version>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.1.0.v20131115</version>
                 <configuration>
                     <scanIntervalSeconds>${jetty-maven-plugin.scan-interval-seconds}</scanIntervalSeconds>
                     <stopKey>stop-jetty</stopKey>
@@ -567,6 +571,32 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>2.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.cloudfoundry</groupId>
+                <artifactId>cf-maven-plugin</artifactId>
+                <version>1.0.2</version>
+                <configuration>
+                    <server>exteso-pivotal-instance</server>
+                    <target>http://api.run.pivotal.io</target>
+                    <org>exteso</org>
+                    <space>development</space>
+                    <appname>parkingfriends</appname>
+                    <url>parkingfriends.cfapps.io</url>
+                    <memory>512</memory>
+                    <diskQuota>1024</diskQuota>
+                    <healthCheckTimeout>60</healthCheckTimeout>
+                    <env>
+                        <ENV-VAR-NAME>env-var-value</ENV-VAR-NAME>
+                    </env>
+                    <services>
+                        <service>
+                            <name>postgres-test</name>
+                            <label>elephantsql</label>
+                            <plan>turtle</plan>
+                        </service>
+                    </services>
+                </configuration>
             </plugin>
         </plugins>
     </build>
