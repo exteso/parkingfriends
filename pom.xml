@@ -9,6 +9,62 @@
 
     <profiles>
         <profile>
+            <!-- When built in OpenShift the &#39;openshift&#39; profile will be used when invoking mvn. -->
+            <!-- Use this profile for any OpenShift specific customization your app will need. -->
+            <!-- By default that is to put the resulting archive into the &#39;deployments&#39; folder. -->
+            <!-- <a href="http://maven.apache.org/guides/mini/guide-building-for-different-environments.html" title="http://maven.apache.org/guides/mini/guide-building-for-different-environments.html">http://maven.apache.org/guides/mini/guide-building-for-different-environ...</a> -->
+            <id>openshift</id>
+            <build>
+                <finalName>parkingfriends</finalName>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.1.1</version>
+                        <configuration>
+                            <outputDirectory>deployments</outputDirectory>
+                            <warName>ROOT</warName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <!-- Spring profile to use -->
+                <spring.profiles.active>dev</spring.profiles.active>
+                <!-- i18n resource files reloading -->
+                <message.reloading.enabled>true</message.reloading.enabled>
+                <!-- log configuration -->
+                <logback.loglevel>DEBUG</logback.loglevel>
+                <!-- ehcache configuration -->
+                <ehcache.maxBytesLocalHeap>64M</ehcache.maxBytesLocalHeap>
+                <!-- development database configuration -->
+                <datasource.datasourceclassname>org.hsqldb.jdbc.JDBCDataSource</datasource.datasourceclassname>
+                <datasource.url>jdbc:hsqldb:mem:ParkingFriends</datasource.url>
+                <datasource.databaseName></datasource.databaseName>
+                <datasource.serverName></datasource.serverName>
+                <datasource.username></datasource.username>
+                <datasource.password></datasource.password>
+                <hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
+                <hibernate.show_sql>true</hibernate.show_sql>
+                <hibernate.generate_statistics>true</hibernate.generate_statistics>
+                <!-- email configuration -->
+                <mail.host>localhost</mail.host>
+                <mail.port>25</mail.port>
+                <mail.user></mail.user>
+                <mail.password></mail.password>
+                <mail.tls></mail.tls>
+                <mail.from>jhipster@localhost</mail.from>
+                <jetty-maven-plugin.scan-interval-seconds>1</jetty-maven-plugin.scan-interval-seconds>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.hsqldb</groupId>
+                    <artifactId>hsqldb</artifactId>
+                    <version>2.3.1</version>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
