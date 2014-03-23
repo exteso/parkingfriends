@@ -12,12 +12,12 @@ With this process you can run your own instance of parkingfriends for free (than
 1) Create an account at http://openshift.redhat.com/ and follow the Getting Started guide to install the OpenShift command line tools.
 
 2) Create a JBoss Tomcat7 platform:
->rhc app create parkingfriends jbossews-2.0
+> rhc app create parkingfriends jbossews-2.0
 
  3) Add this upstream repo:
 > cd parkingfriends
- git remote add upstream -m master git://github.com/exteso/parkingfriends.git
- git pull -s recursive -X theirs upstream master
+> git remote add upstream -m master git://github.com/exteso/parkingfriends.git
+> git pull -s recursive -X theirs upstream master
 
  4) Push the repo upstream:
 > git push
