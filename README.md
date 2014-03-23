@@ -5,6 +5,26 @@ ParkingFriends allows a group of people to share private parking places planning
 The Owner of a parking place get paid when a Friend uses his places.
 Owners announcing absence dates in advance are the first in the list when searching for free parking places in a location.
 
+Deploy on OpenShift
+===================
+With this process you can run your own instance of parkingfriends for free (thanks openshift)
+
+1) Create an account at http://openshift.redhat.com/ and follow the Getting Started guide to install the OpenShift command line tools.
+
+2) Create a JBoss Tomcat7 platform:
+>rhc app create parkingfriends jbossews-2.0
+
+ 3) Add this upstream repo:
+> cd parkingfriends
+ git remote add upstream -m master git://github.com/exteso/parkingfriends.git
+ git pull -s recursive -X theirs upstream master
+
+ 4) Push the repo upstream:
+> git push
+
+ 5) That's it, you can now browse to your application at:
+> http://parkingfriends-$yournamespace.rhcloud.com
+
 
 Installation & Setup
 ====================
