@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "ParkingFriends",
+        "title": "JHipster",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
@@ -9,28 +9,33 @@
                 "settings": "Settings",
                 "password": "Password",
                 "sessions": "Sessions",
+                "tracker": "User tracker",
                 "metrics": "Metrics",
                 "logs": "Logs",
+                "audits": "Audits",
                 "login": "Authenticate",
                 "logout": "Log out"
             },
+            "admin": "Administration",
             "language": "Language"
         },
         "language": {
             "en": "English",
-            "fr": "French"
+            "fr": "French",
+            "de": "German"
         }
     },
     "main": {
-        "title": "Welcome, Parking Friend!",
+        "title": "Welcome, Java Hipster!",
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\".",
-            "authenticated": "If you want to <a href=\"#/login\">authenticate</a>, you can try the default login=\"admin\" and password=\"admin\"."
+            "authenticated": "If you want to <a href=\"#/login\">authenticate</a>, you can try the default accounts:<br/>- Admnistrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
         },
         "question": "If you have any question on JHipster:",
         "link": {
             "homepage": "JHipster homepage",
+            "stackoverflow": "JHipster on Stack Overflow",
             "bugtracker": "JHipster bug tracker",
             "contact": "contact @java_hipster on Twitter"
         },
@@ -130,9 +135,25 @@
         }
 
     },
+    "tracker": {
+        "title": "Real-time user activities",
+        "table": {
+            "userlogin": "User",
+            "ipaddress": "IP Address",
+            "userAgent": "User agent",
+            "page": "Current page",
+            "time": "Time"
+        }
+    },
     "metrics": {
         "title": "Application Metrics",
         "refresh.button": "Refresh",
+        "health": {
+            "title": "Heath checks",
+            "database": "Database: ",
+            "email": "Email: ",
+            "stacktrace": "Stacktrace"
+        },
         "jvm": {
             "title": "JVM Metrics",
             "memory": {
@@ -143,10 +164,23 @@
             },
             "threads": {
                 "title": "Threads",
+                "all": "All",
                 "runnable": "Runnable",
-                "timewaiting": "Timed waiting",
+                "timedwaiting": "Timed waiting",
                 "waiting": "Waiting",
-                "blocked": "Blocked"
+                "blocked": "Blocked",
+                "dump": {
+                    "title": "Threads dump",
+                    "id": "Id: ",
+                    "blockedtime": "Blocked Time",
+                    "blockedcount": "Blocked Count",
+                    "waitedtime": "Waited Time",
+                    "waitedcount": "Waited Count",
+                    "lockname": "Lock name",
+                    "stacktrace": "Stacktrace",
+                    "show": "Show",
+                    "hide": "Hide"
+                }
             },
             "gc": {
                 "title": "Garbage collections",
@@ -204,6 +238,32 @@
             "name": "Name",
             "level": "Level"
         }
+    },
+    "audits": {
+        "title": "Audits",
+        "filter": {
+            "title": "Filter per date",
+            "from": "from",
+            "to": "to",
+            "button": {
+                "weeks": "Weeks",
+                "today": "today",
+                "clear": "clear",
+                "close": "close"
+            }
+        },
+        "table": {
+            "header": {
+                "principal": "User",
+                "date": "Date",
+                "status": "State",
+                "data": "Extra data"
+            },
+            "data": {
+                "remoteAddress": "Remote Address:"
+            }
+        }
+
     },
     "footer": "This is your footer"
 }

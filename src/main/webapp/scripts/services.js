@@ -2,33 +2,57 @@
 
 /* Services */
 
-ParkingFriendsApp.factory('Account', ['$resource',
+parkingfriendsApp.factory('Account', ['$resource',
     function ($resource) {
         return $resource('app/rest/account', {}, {
         });
     }]);
 
-ParkingFriendsApp.factory('Password', ['$resource',
+parkingfriendsApp.factory('Password', ['$resource',
     function ($resource) {
         return $resource('app/rest/account/change_password', {}, {
         });
     }]);
 
-ParkingFriendsApp.factory('Sessions', ['$resource',
+parkingfriendsApp.factory('Sessions', ['$resource',
     function ($resource) {
         return $resource('app/rest/account/sessions/:series', {}, {
             'get': { method: 'GET', isArray: true}
         });
     }]);
 
-ParkingFriendsApp.factory('Metrics', ['$resource',
+parkingfriendsApp.factory('MetricsService', ['$resource',
     function ($resource) {
-        return $resource('/metrics/metrics', {}, {
+        return $resource('metrics/metrics', {}, {
             'get': { method: 'GET'}
         });
     }]);
 
-ParkingFriendsApp.factory('LogsService', ['$resource',
+parkingfriendsApp.factory('ThreadDumpService', ['$http',
+    function ($http) {
+        return {
+            dump: function() {
+                var promise = $http.get('dump').then(function(response){
+                    return response.data;
+                });
+                return promise;
+            }
+        };
+    }]);
+
+parkingfriendsApp.factory('HealthCheckService', ['$rootScope', '$http',
+    function ($rootScope, $http) {
+        return {
+            check: function() {
+                var promise = $http.get('health').then(function(response){
+                    return response.data;
+                });
+                return promise;
+            }
+        };
+    }]);
+
+parkingfriendsApp.factory('LogsService', ['$resource',
     function ($resource) {
         return $resource('app/rest/logs', {}, {
             'findAll': { method: 'GET', isArray: true},
@@ -36,43 +60,58 @@ ParkingFriendsApp.factory('LogsService', ['$resource',
         });
     }]);
 
-ParkingFriendsApp.factory('AuthenticationSharedService', ['$rootScope', '$http',
-    function ($rootScope, $http) {
+parkingfriendsApp.factory('AuditsService', ['$http',
+    function ($http) {
         return {
-            message: '',
-            prepForBroadcast: function(msg) {
-                this.message = msg;
-                this.broadcastItem();
+            findAll: function() {
+                var promise = $http.get('app/rest/audits/all').then(function (response) {
+                    return response.data;
+                });
+                return promise;
             },
-            broadcastItem: function() {
-                $rootScope.$broadcast("authenticationEvent");
+            findByDates: function(fromDate, toDate) {
+                var promise = $http.get('app/rest/audits/byDates', {params: {fromDate: fromDate, toDate: toDate}}).then(function (response) {
+                    return response.data;
+                });
+                return promise;
+            }
+        }
+    }]);
+
+parkingfriendsApp.factory('AuthenticationSharedService', ['$rootScope', '$http', 'authService',
+    function ($rootScope, $http, authService) {
+        return {
+            authenticate: function() {
+               var promise = $http.get('app/rest/authenticate')
+                    .success(function (response) {
+                        return response.data;
+                    });
+                return promise;
             },
             login: function (param) {
-                var that = this;
                 var data ="j_username=" + param.username +"&j_password=" + param.password +"&_spring_security_remember_me=" + param.rememberMe +"&submit=Login";
-                $http.post('/app/authentication', data, {
+                $http.post('app/authentication', data, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded"
-                    }
+                    },
+                    ignoreAuthModule: 'ignoreAuthModule'
                 }).success(function (data, status, headers, config) {
-                        $rootScope.authenticationError = false;
-                        that.prepForBroadcast("login");
-                        if(param.success){
-                            param.success(data, status, headers, config);
-                        }
-                    }).error(function (data, status, headers, config) {
-                        $rootScope.authenticationError = true;
-                        if(param.error){
-                            param.error(data, status, headers, config);
-                        }
-                    });
+                    $rootScope.authenticationError = false;
+                    if(param.success){
+                        param.success(data, status, headers, config);
+                    }
+                }).error(function (data, status, headers, config) {
+                    $rootScope.authenticationError = true;
+                    if(param.error){
+                        param.error(data, status, headers, config);
+                    }
+                });
             },
             logout: function () {
                 $rootScope.authenticationError = false;
-                var that = this;
-                $http.get('/app/logout')
+                $http.get('app/logout')
                     .success(function (data, status, headers, config) {
-                        that.prepForBroadcast("logout");
+                        authService.loginCancelled();
                     });
             }
         };

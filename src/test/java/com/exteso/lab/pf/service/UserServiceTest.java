@@ -1,18 +1,18 @@
 package com.exteso.lab.pf.service;
 
+import com.exteso.lab.pf.Application;
 import com.exteso.lab.pf.domain.PersistentToken;
 import com.exteso.lab.pf.domain.User;
 import com.exteso.lab.pf.repository.PersistentTokenRepository;
 import com.exteso.lab.pf.repository.UserRepository;
-import com.exteso.lab.pf.test.ApplicationTestConfiguration;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.ContextHierarchy;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
 
@@ -24,14 +24,11 @@ import static org.junit.Assert.assertEquals;
  * @see UserService
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextHierarchy({
-        @ContextConfiguration(
-                name = "root",
-                classes = ApplicationTestConfiguration.class)
-})
+@SpringApplicationConfiguration(classes = Application.class)
+@WebAppConfiguration
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
+@ActiveProfiles("dev")
 public class UserServiceTest {
-
-    private static final Logger log = LoggerFactory.getLogger(UserServiceTest.class);
 
     @Inject
     private PersistentTokenRepository persistentTokenRepository;

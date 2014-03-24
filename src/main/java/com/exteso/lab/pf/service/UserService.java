@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,10 @@ import java.util.List;
 @Transactional
 public class UserService {
 
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
-    private StandardPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Inject
     private UserRepository userRepository;
@@ -34,11 +34,11 @@ public class UserService {
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
 
-    public void updateUserInformation(User user) {
+    public void updateUserInformation(String firstName, String lastName, String email) {
         User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
-        currentUser.setFirstName(user.getFirstName());
-        currentUser.setLastName(user.getLastName());
-        currentUser.setEmail(user.getEmail());
+        currentUser.setFirstName(firstName);
+        currentUser.setLastName(lastName);
+        currentUser.setEmail(email);
         userRepository.save(currentUser);
         log.debug("Changed Information for User: {}", currentUser);
     }
@@ -49,6 +49,13 @@ public class UserService {
         currentUser.setPassword(encryptedPassword);
         userRepository.save(currentUser);
         log.debug("Changed password for User: {}", currentUser);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserWithAuthorities() {
+        User currentUser = userRepository.findOne(SecurityUtils.getCurrentLogin());
+        currentUser.getAuthorities().size(); // eagerly load the association
+        return currentUser;
     }
 
     /**

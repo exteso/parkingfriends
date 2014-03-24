@@ -10,28 +10,35 @@ import java.io.IOException;
  */
 public class CachingHttpHeadersFilter implements Filter {
 
-    // Cache period is 1 month
-    private static long CACHE_PERIOD = 31 * 24 * 60 * 60;
+    // Cache period is 1 month (in ms)
+    private final static long CACHE_PERIOD = 2678400000L;
 
     // We consider the last modified date is the start up time of the server
-    private static long LAST_MODIFIED = System.currentTimeMillis();
+    private final static long LAST_MODIFIED = System.currentTimeMillis();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        // Nothing to initialize
+    }
+
+    @Override
+    public void destroy() {
+        // Nothing to destroy
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
+        httpResponse.setHeader("Cache-Control", "max-age=2678400000, public");
+        httpResponse.setHeader("Pragma", "cache");
+
         // Setting Expires header, for proxy caching
         httpResponse.setDateHeader("Expires", CACHE_PERIOD + System.currentTimeMillis());
 
         // Setting the Last-Modified header, for browser caching
         httpResponse.setDateHeader("Last-Modified", LAST_MODIFIED);
-    }
 
-    @Override
-    public void destroy() {
+        chain.doFilter(request, response);
     }
 }

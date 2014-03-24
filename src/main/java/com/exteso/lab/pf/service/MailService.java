@@ -22,7 +22,7 @@ import javax.inject.Inject;
 @Service
 public class MailService {
 
-    private static final Logger log = LoggerFactory.getLogger(MailService.class);
+    private final Logger log = LoggerFactory.getLogger(MailService.class);
 
     @Inject
     private Environment env;
@@ -37,7 +37,7 @@ public class MailService {
 
     @PostConstruct
     public void init() {
-        this.from = env.getProperty("mail.from");
+        this.from = env.getProperty("spring.mail.from");
     }
 
     @Async

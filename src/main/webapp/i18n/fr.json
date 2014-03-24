@@ -9,16 +9,20 @@
                 "settings": "Profil",
                 "password": "Mot de passe",
                 "sessions": "Sessions",
+                "tracker": "Suivi des utilisateurs",
                 "metrics": "Métriques",
                 "logs": "Logs",
+                "audits": "Audits",
                 "login": "S'authentifier",
                 "logout": "Déconnexion"
             },
+            "admin": "Administration",
             "language": "Langue"
         },
         "language": {
             "en": "Anglais",
-            "fr": "Français"
+            "fr": "Français",
+            "de": "Allemand"
         }
     },
     "index": {
@@ -29,11 +33,12 @@
         "subtitle": "Ceci est votre page d'accueil",
         "logged": {
             "message": "Vous êtes connecté en tant que \"{{username}}\".",
-            "authenticated": "Si vous voulez vous <a href=\"#/login\">connecter</a>, vous pouvez utiliser les identifiants par défaut : <br/> nom d'utilisateur=\"admin\" et mot de passe =\"admin\"."
+            "authenticated": "Si vous voulez vous <a href=\"#/login\">connecter</a>, vous pouvez utiliser les comptes par défaut : <br/> - Administrateur (nom d'utilisateur=\"admin\" et mot de passe =\"admin\") <br/> - Utilisateur (nom d'utilisateur=\"user\" et mot de passe =\"user\")."
         },
-        "question": "Si vous avez des questions à propos de Jhispter:",
+        "question": "Si vous avez des questions à propos de JHipster:",
         "link": {
             "homepage": "Page d'accueil de JHipster",
+            "stackoverflow": "JHipster sur Stack Overflow",
             "bugtracker": "JHipster bug tracker",
             "contact": "Contactez-nous sur Twitter @java_hipster"
         },
@@ -41,13 +46,13 @@
         "github": "Github"
     },
     "login": {
-        "title": "S'authentifier",
+        "title": "Authentification",
         "form": {
             "username": "Nom d'utilisateur",
             "username.placeholder": "Votre nom d'utilisateur",
             "password": "Mot de passe",
             "password.placeholder": "Votre mot de passe",
-            "rememberme": "Garder ma connexion ouverte",
+            "rememberme": "Garder la session ouverte",
             "button": "Connexion"
         },
         "messages": {
@@ -132,9 +137,25 @@
             "error": "<strong>Une erreur est survenue!</strong> La session ne peut pas être invalidée."
         }
     },
+    "tracker": {
+        "title": "Activité des utilisateurs en temps réél",
+        "table": {
+            "userlogin": "Utilisateur",
+            "ipaddress": "Adresse IP",
+            "userAgent": "User agent",
+            "page": "Page en cours",
+            "time": "Heure"
+        }
+    },
     "metrics": {
         "title": "Métriques de l'application",
         "refresh.button": "Rafraichir",
+        "health": {
+            "title": "Diagnostics",
+            "database": "Base de données: ",
+            "email": "Email: ",
+            "stacktrace": "Stacktrace"
+        },
         "jvm": {
             "title": "Métriques de la JVM",
             "memory": {
@@ -145,10 +166,23 @@
             },
             "threads": {
                 "title": "Threads",
+                "all": "Tous",
                 "runnable": "Executable",
-                "timewaiting": "Temps d'attente",
+                "timedwaiting": "Temps d'attente",
                 "waiting": "En attente",
-                "blocked": "Bloqué"
+                "blocked": "Bloqué",
+                "dump": {
+                    "title": "Threads dump",
+                    "id": "Id :",
+                    "blockedtime": "Temps bloqué",
+                    "blockedcount": "Nb fois bloqué",
+                    "waitedtime": "Temps d'attente",
+                    "waitedcount": "Nb fois en attente",
+                    "lockname": "Nom du process bloquant",
+                    "stacktrace": "Stacktrace",
+                    "show": "Afficher",
+                    "hide": "Cacher"
+                }
             },
             "gc": {
                 "title": "Garbage collections",
@@ -205,6 +239,31 @@
         "table": {
             "name": "Nom",
             "level": "Niveau"
+        }
+    },
+    "audits": {
+        "title": "Audits",
+        "filter": {
+            "title": "Filtrer par date",
+            "from": "De",
+            "to": "à",
+            "button": {
+                "weeks": "Semaines",
+                "today": "Aujourd'hui",
+                "clear": "Effacer",
+                "close": "Fermer"
+            }
+        },
+        "table": {
+            "header": {
+                "principal": "Utilisateur",
+                "date": "Date",
+                "status": "Status",
+                "data": "Autres données"
+            },
+            "data": {
+                "remoteAddress": "Adresse Distante :"
+            }
         }
     },
     "footer": "Ceci est votre pied de page"

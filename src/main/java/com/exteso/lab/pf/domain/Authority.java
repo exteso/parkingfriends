@@ -1,5 +1,6 @@
 package com.exteso.lab.pf.domain;
 
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
