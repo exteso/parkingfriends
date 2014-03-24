@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,14 +31,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.exteso.lab.pf.Application;
-import com.exteso.lab.pf.domain.ParkPlace;
-import com.exteso.lab.pf.repository.ParkPlaceRepository;
+import com.exteso.lab.pf.domain.ParkPlaceGroup;
+import com.exteso.lab.pf.repository.ParkPlaceGroupRepository;
 
 
 /**
- * Test class for the ParkPlaceResource REST controller.
+ * Test class for the ParkPlaceGroupResource REST controller.
  *
- * @see ParkPlaceResource
+ * @see ParkPlaceGroupResource
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -46,9 +47,9 @@ import com.exteso.lab.pf.repository.ParkPlaceRepository;
     DirtiesContextTestExecutionListener.class,
     TransactionalTestExecutionListener.class })
 @ActiveProfiles("dev")
-public class ParkPlaceResourceTest {
+public class ParkPlaceGroupResourceTest {
 	
-    private static final Long DEFAULT_ID = new Long(1L);
+    private static final Long DEFAULT_ID = 1L;
 
     private static final LocalDate DEFAULT_SAMPLE_DATE_ATTR = new LocalDate(0L);
 
@@ -59,72 +60,72 @@ public class ParkPlaceResourceTest {
     private static final String UPD_SAMPLE_TEXT_ATTR = "sampleTextAttributeUpt";
 
     @Inject
-    private ParkPlaceRepository parkplaceRepository;
+    private ParkPlaceGroupRepository parkplacegroupRepository;
 
-    private MockMvc restParkPlaceMockMvc;
+    private MockMvc restParkPlaceGroupMockMvc;
     
-    private ParkPlace parkplace;
+    private ParkPlaceGroup parkplacegroup;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ParkPlaceResource parkplaceResource = new ParkPlaceResource();
-        ReflectionTestUtils.setField(parkplaceResource, "parkplaceRepository", parkplaceRepository);
+        ParkPlaceGroupResource parkplacegroupResource = new ParkPlaceGroupResource();
+        ReflectionTestUtils.setField(parkplacegroupResource, "parkplacegroupRepository", parkplacegroupRepository);
 
-        this.restParkPlaceMockMvc = MockMvcBuilders.standaloneSetup(parkplaceResource).build();
+        this.restParkPlaceGroupMockMvc = MockMvcBuilders.standaloneSetup(parkplacegroupResource).build();
 
-        parkplace = new ParkPlace();
-        parkplace.setId(DEFAULT_ID);
-        ValidityInterval interval = new ValidityInterval();
-        interval.setValidFrom(DEFAULT_SAMPLE_DATE_ATTR);
-    	parkplace.setValidityInterval(interval);
-    	parkplace.setName(DEFAULT_SAMPLE_TEXT_ATTR);
+        parkplacegroup = new ParkPlaceGroup();
+        parkplacegroup.setId(DEFAULT_ID);
+        final ValidityInterval validityInterval = new ValidityInterval();
+        validityInterval.setValidFrom(DEFAULT_SAMPLE_DATE_ATTR);
+        parkplacegroup.setValidityInterval(validityInterval);
+    	parkplacegroup.setName(DEFAULT_SAMPLE_TEXT_ATTR);
     }
 
     @Test
     @Ignore
-    public void testCRUDParkPlace() throws Exception {
+    public void testCRUDParkPlaceGroup() throws Exception {
 
-    	// Create ParkPlace
-    	restParkPlaceMockMvc.perform(post("/app/rest/parkplaces")
+    	// Create ParkPlaceGroup
+    	restParkPlaceGroupMockMvc.perform(post("/app/rest/parkplacegroups")
     			.contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(parkplace)))
+                .content(TestUtil.convertObjectToJsonBytes(parkplacegroup)))
                 .andExpect(status().isOk());
 
-    	// Read ParkPlace
-    	restParkPlaceMockMvc.perform(get("/app/rest/parkplaces/{id}", DEFAULT_ID))
+    	// Read ParkPlaceGroup
+    	restParkPlaceGroupMockMvc.perform(get("/app/rest/parkplacegroups/{id}", DEFAULT_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(DEFAULT_ID.intValue()))
     			.andExpect(jsonPath("$.day").value(DEFAULT_SAMPLE_DATE_ATTR.toString()))
     			.andExpect(jsonPath("$.sampleTextAttribute").value(DEFAULT_SAMPLE_TEXT_ATTR));
 
-    	// Update ParkPlace
-        ValidityInterval interval = new ValidityInterval();
-        interval.setValidFrom(UPD_SAMPLE_DATE_ATTR);
-    	parkplace.setValidityInterval(interval);
-    	parkplace.setName(UPD_SAMPLE_TEXT_ATTR);
+    	// Update ParkPlaceGroup
+        final ValidityInterval validityInterval = new ValidityInterval();
+        validityInterval.setValidFrom(UPD_SAMPLE_DATE_ATTR);
+        parkplacegroup.setValidityInterval(validityInterval);
+    	parkplacegroup.setName(UPD_SAMPLE_TEXT_ATTR);
   
-    	restParkPlaceMockMvc.perform(post("/app/rest/parkplaces")
+    	restParkPlaceGroupMockMvc.perform(post("/app/rest/parkplacegroups")
     			.contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(parkplace)))
+                .content(TestUtil.convertObjectToJsonBytes(parkplacegroup)))
                 .andExpect(status().isOk());
 
-    	// Read updated ParkPlace
-    	restParkPlaceMockMvc.perform(get("/app/rest/parkplaces/{id}", DEFAULT_ID))
+    	// Read updated ParkPlaceGroup
+    	restParkPlaceGroupMockMvc.perform(get("/app/rest/parkplacegroups/{id}", DEFAULT_ID))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(DEFAULT_ID.intValue()))
     			.andExpect(jsonPath("$.day").value(UPD_SAMPLE_DATE_ATTR.toString()))
     			.andExpect(jsonPath("$.sampleTextAttribute").value(UPD_SAMPLE_TEXT_ATTR));
 
-    	// Delete ParkPlace
-    	restParkPlaceMockMvc.perform(delete("/app/rest/parkplaces/{id}", DEFAULT_ID)
+    	// Delete ParkPlaceGroup
+    	restParkPlaceGroupMockMvc.perform(delete("/app/rest/parkplacegroups/{id}", DEFAULT_ID)
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
-    	// Read nonexisting ParkPlace
-    	restParkPlaceMockMvc.perform(get("/app/rest/parkplaces/{id}", DEFAULT_ID)
+    	// Read nonexisting ParkPlaceGroup
+    	restParkPlaceGroupMockMvc.perform(get("/app/rest/parkplacegroups/{id}", DEFAULT_ID)
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound());
 

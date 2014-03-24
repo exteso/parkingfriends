@@ -1,11 +1,11 @@
 <div>
 
-    <h2>ParkPlaces</h2>
+    <h2>ParkPlaceGroups</h2>
 
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#saveParkPlaceModal">
-        <span class="glyphicon glyphicon-flash"></span> Create a new ParkPlace
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#saveParkPlaceGroupModal">
+        <span class="glyphicon glyphicon-flash"></span> Create a new ParkPlaceGroup
     </button>
-    <div class="modal fade" id="saveParkPlaceModal" tabindex="-1" role="dialog" aria-labelledby="myParkPlaceLabel"
+    <div class="modal fade" id="saveParkPlaceGroupModal" tabindex="-1" role="dialog" aria-labelledby="myParkPlaceGroupLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -16,25 +16,25 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                                 ng-click="clear()">&times;</button>
-                        <h4 class="modal-title" id="myParkPlaceLabel">Create or edit a ParkPlace</h4>
+                        <h4 class="modal-title" id="myParkPlaceGroupLabel">Create or edit a ParkPlaceGroup</h4>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label>ID</label>
                             <input type="text" class="form-control" name="id"
-                                   ng-model="parkplace.id" readonly>
+                                   ng-model="parkplacegroup.id" readonly>
                         </div>
 
                         <div class="form-group">
                             <label>Sample text attribute</label>
                             <input type="text" class="form-control" name="test"
-                                   ng-model="parkplace.name" ng-minlength=1 ng-maxlength=50 required>
+                                   ng-model="parkplacegroup.name" ng-minlength=1 ng-maxlength=50 required>
                         </div>
 
                         <div class="form-group">
-                            <label>Valid from:</label>
+                            <label>Sample date attribute</label>
                             <input type="date" class="form-control" name="test"
-                                   ng-model="parkplace.validFrom" required>
+                                   ng-model="parkplacegroup.validFrom" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -61,18 +61,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="parkplace in parkplaces">
-                    <td>{{parkplace.id}}</td>
-                    <td>{{parkplace.name}}</td>
-                    <td>{{parkplace.validFrom}}</td>
+                <tr ng-repeat="parkplacegroup in parkplacegroups">
+                    <td>{{parkplacegroup.id}}</td>
+                    <td>{{parkplacegroup.name}}</td>
+                    <td>{{parkplacegroup.validFrom}}</td>
                     <td>
                         <button type="submit"
-                                ng-click="update(parkplace.id)"
+                                ng-click="update(parkplacegroup.id)"
                                 class="btn">
                             <span class="glyphicon glyphicon-pencil"></span> Edit
                         </button>
                         <button type="submit"
-                                ng-click="delete(parkplace.id)"
+                                ng-click="delete(parkplacegroup.id)"
                                 class="btn btn-danger">
                             <span class="glyphicon glyphicon-remove-circle"></span> Delete
                         </button>
