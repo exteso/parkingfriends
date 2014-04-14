@@ -1,5 +1,6 @@
 package com.exteso.lab.pf.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -31,6 +32,26 @@ public class ParkPlace implements Serializable {
     private ValidityInterval validityInterval;
 
     @NotNull
-    private User owner;
+    private String owner;
 
+    /*
+    @ManyToOne
+    @JoinColumn(name="parkPlaceGroupId")
+    private ParkPlaceGroup parkPlaceGroup;
+    */
+
+    @Override
+    public String toString() {
+        return "ParkPlace: "+name;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof ParkPlace && name.equals(((ParkPlace)obj).name));
+    }
 }

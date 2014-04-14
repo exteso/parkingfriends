@@ -38,10 +38,14 @@ public class ParkPlaceGroup implements Serializable {
     @NotNull
     private Geolocation geolocation;
 
-    @OneToMany(orphanRemoval=true)
-    @JoinColumn()
+    @OneToMany(fetch = FetchType.EAGER,orphanRemoval=true)
+    @JoinColumn(name="parkPlaceGroupId")
     private List<ParkPlace> parkPlaces;
 
-    private User administrator;
+    private String administrator;
 
+    @Override
+    public String toString() {
+        return "ParkPlaceGroup: "+name;
+    }
 }

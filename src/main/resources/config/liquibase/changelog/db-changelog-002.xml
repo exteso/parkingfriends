@@ -20,7 +20,8 @@
             <column name="id" type="integer">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(1024)"/>
+            <column name="name" type="varchar(50)"/>
+            <column name="description" type="varchar(1024)"/>
             <column name="latitude" type="decimal(11,8)"/>
             <column name="longitude" type="decimal(11,8)"/>
             <column name="validFrom" type="date"/>
@@ -54,7 +55,15 @@
                                  referencedColumnNames="id"
                                  referencedTableName="T_PARKPLACEGROUP"/>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/parkplacegroups.csv"
+                  separator=";"
+                  tableName="T_PARKPLACEGROUP"/>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/parkplaces.csv"
+                  separator=";"
+                  tableName="T_PARKPLACE"/>
 
     </changeSet>
 
