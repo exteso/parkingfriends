@@ -1,0 +1,8 @@
+{
+  "generator-jhipster": {
+    "baseName": "parkingfriends",
+    "packageName": "com.exteso.lab.pf",
+    "packageFolder": "com/exteso/lab/pf",
+    "hibernateCache": "ehcache"
+  }
+}
