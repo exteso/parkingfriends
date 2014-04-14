@@ -6,5 +6,4 @@
 
     <include file="classpath:config/liquibase/changelog/db-changelog-001.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/db-changelog-002.xml" relativeToChangelogFile="false"/>
-
 </databaseChangeLog>
