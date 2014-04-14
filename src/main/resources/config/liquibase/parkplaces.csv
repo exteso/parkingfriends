@@ -1,0 +1,3 @@
+parkplace_id;name;description;latitude;longitude;validFrom;validTo;owner;parkPlaceGroupId
+0;140;Posteggio Laura;null;null;null;null;user;0
+1;153;Posteggio Olivier;null;null;null;null;user;0

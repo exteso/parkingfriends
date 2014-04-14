@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+        <changeSet id="3" author="myself">
+            <createTable tableName="T_PARKPLACEGROUP">
+                <column name="id" type="bigint" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false" />
+                </column>
+                <column name="name" type="varchar(1024)"/>
+                <column name="latitude" type="decimal(11,8)"/>
+                <column name="longitude" type="decimal(11,8)"/>
+                <column name="validFrom" type="date"/>
+                <column name="validTo" type="date"/>
+                <column name="administrator" type="varchar(50)" />
+            </createTable>
+            <createTable tableName="T_PARKPLACE">
+                <column name="parkplace_id" type="bigint" autoIncrement="true">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="name" type="varchar(1024)"/>
+                <column name="description" type="varchar(1024)"/>
+                <column name="latitude" type="decimal(11,8)"/>
+                <column name="longitude" type="decimal(11,8)"/>
+                <column name="validFrom" type="date"/>
+                <column name="validTo" type="date"/>
+                <column name="owner" type="varchar(50)" />
+                <column name="parkPlaceGroupId" type="integer" />
+            </createTable>
+
+            <createTable tableName="T_PARKPLACEDAYCALENDAR">
+                <column name="id" type="integer">
+                    <constraints primaryKey="true" nullable="false"/>
+                </column>
+                <column name="day" type="date"/>
+            </createTable>
+
+            <addForeignKeyConstraint baseColumnNames="owner"
+                                     baseTableName="T_PARKPLACE"
+                                     constraintName="fk_parkplace_owner"
+                                     referencedColumnNames="login"
+                                     referencedTableName="T_USER"/>
+
+            <addForeignKeyConstraint baseColumnNames="administrator"
+                                     baseTableName="T_PARKPLACEGROUP"
+                                     constraintName="fk_parkplace_admin"
+                                     referencedColumnNames="login"
+                                     referencedTableName="T_USER"/>
+
+            <addForeignKeyConstraint baseColumnNames="parkPlaceGroupId"
+                                     baseTableName="T_PARKPLACE"
+                                     constraintName="fk_parkplace_group"
+                                     referencedColumnNames="id"
+                                     referencedTableName="T_PARKPLACEGROUP"/>
+
+            <loadData encoding="UTF-8"
+                      file="config/liquibase/parkplacegroups.csv"
+                      separator=";"
+                      tableName="T_PARKPLACEGROUP"/>
+
+            <loadData encoding="UTF-8"
+                      file="config/liquibase/parkplaces.csv"
+                      separator=";"
+                      tableName="T_PARKPLACE"/>
+
+            <!--alterSequence
+                   ordered="true"
+                   sequenceName="T_PARKPLACE"/-->
+        </changeSet>
+
+</databaseChangeLog>
